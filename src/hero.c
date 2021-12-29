@@ -11,30 +11,35 @@ void Hero_Init(struct Hero *hero, uint8_t sprStartIndex)
         set_sprite_tile(sprStartIndex + hero_i, sprStartIndex + hero_i);
         hero->sprIds[hero_i] = sprStartIndex + hero_i;
     }
-    hero->x = 16;
-    hero->y = 24;
-    hero->w = 16;
-    hero->h = 16;
-    hero->dirY = 0;
-    hero->dirX = 0;
-
-    Hero_Draw(hero);
+    hero->x = 16u;
+    hero->y = 24u;
+    hero->w = 16u;
+    hero->h = 16u;
+    hero->dirY = 0u;
+    hero->dirX = 0u;
+    hero->redraw = TRUE;
 }
 
 void Hero_MoveX(struct Hero *hero, int8_t x)
 {
     hero->x += x;
+    hero->redraw = TRUE;
 }
 
 void Hero_MoveY(struct Hero *hero, int8_t y)
 {
     hero->y += y;
+    hero->redraw = TRUE;
 }
 
 void Hero_Draw(struct Hero *hero)
 {
-    move_sprite(hero->sprIds[0], hero->x, hero->y);
-    move_sprite(hero->sprIds[1], hero->x + 8, hero->y);
-    move_sprite(hero->sprIds[2], hero->x, hero->y + 8);
-    move_sprite(hero->sprIds[3], hero->x + 8, hero->y + 8);
+    if (hero->redraw)
+    {
+        move_sprite(hero->sprIds[0u], hero->x, hero->y);
+        move_sprite(hero->sprIds[1u], hero->x + 8u, hero->y);
+        move_sprite(hero->sprIds[2u], hero->x, hero->y + 8u);
+        move_sprite(hero->sprIds[3u], hero->x + 8u, hero->y + 8u);
+        hero->redraw = FALSE;
+    }
 }

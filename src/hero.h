@@ -7,13 +7,14 @@
 
 typedef struct Hero
 {
-    uint8_t sprIds[4];
+    uint8_t sprIds[4u];
     uint8_t x;
     uint8_t y;
     uint8_t w;
     uint8_t h;
     int8_t dirY; // -1 = up, 1 = down
     int8_t dirX; // -1 = left, 1 = right
+    uint8_t redraw;
 };
 
 extern void Hero_Init(struct Hero *hero, uint8_t sprStartIndex);
