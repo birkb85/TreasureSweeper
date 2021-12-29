@@ -3,7 +3,8 @@
         "string.h": "c",
         "rand.h": "c",
         "gb.h": "c",
-        "hero_spr.h": "c"
+        "hero_spr.h": "c",
+        "version.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
