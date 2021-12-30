@@ -38,25 +38,39 @@ void Init()
 void Update()
 {
     controls = joypad();
+
     if (controls & J_UP)
     {
+        Hero_SetDir(&hero, Hero_Dir_Up);
+
+        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
         if (!Level_MoveCameraUp(&level, 1))
-            Hero_MoveY(&hero, -1);
+            Hero_MoveUp(&hero, 1);
     }
     else if (controls & J_DOWN)
     {
+        Hero_SetDir(&hero, Hero_Dir_Down);
+
+        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
         if (!Level_MoveCameraDown(&level, 1))
-            Hero_MoveY(&hero, 1);
+            Hero_MoveDown(&hero, 1);
     }
+
     if (controls & J_LEFT)
     {
+        Hero_SetDir(&hero, Hero_Dir_Left);
+
+        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
         if (!Level_MoveCameraLeft(&level, 1))
-            Hero_MoveX(&hero, -1);
+            Hero_MoveLeft(&hero, 1);
     }
     else if (controls & J_RIGHT)
     {
+        Hero_SetDir(&hero, Hero_Dir_Right);
+
+        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
         if (!Level_MoveCameraRight(&level, 1))
-            Hero_MoveX(&hero, 1);
+            Hero_MoveRight(&hero, 1);
     }
 }
 

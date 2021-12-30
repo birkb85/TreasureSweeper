@@ -5,7 +5,7 @@ void Level_Init(struct Level *level)
     DISPLAY_OFF;
     set_bkg_data(0u, 16u, levelTiles);
 
-    // TODO BB 2021-12-29. Init map correctly!
+    // TODO BB 2021-12-29. Tester kort for at få noget visuelt frem.
     for (uint8_t x = 0u; x < levelMapWidth; x += 2u)
     {
         for (uint8_t y = 0u; y < levelMapHeight; y += 2u)
@@ -14,44 +14,12 @@ void Level_Init(struct Level *level)
                 Level_SetTile(level, x, y, 4u);
             else
                 Level_SetTile(level, x, y, 8u);
-
-            // if (x % 2 == 0)
-            // {
-            //     if (y % 2 == 0)
-            //         level->map[y * levelMapWidth + x] = 0;
-            //     else
-            //         level->map[y * levelMapWidth + x] = 2;
-            // }
-            // else
-            // {
-            //     if (y % 2 == 0)
-            //         level->map[y * levelMapWidth + x] = 1;
-            //     else
-            //         level->map[y * levelMapWidth + x] = 3;
-            // }
         }
     }
     Level_SetTile(level, 0u, 0u, 12u);
     Level_SetTile(level, levelMapWidth - 2u, 0u, 12u);
     Level_SetTile(level, 0u, levelMapHeight - 2u, 12u);
     Level_SetTile(level, levelMapWidth - 2u, levelMapHeight - 2u, 12u);
-
-    // level->map[0u] = 0xFFu;
-    // level->map[1u] = 0xFFu;
-    // level->map[30u] = 0xFFu;
-    // level->map[31u] = 0xFFu;
-    // level->map[32u] = 0xFFu;
-    // level->map[33u] = 0xFFu;
-    // level->map[62u] = 0xFFu;
-    // level->map[63u] = 0xFFu;
-    // level->map[960u] = 0xFFu;
-    // level->map[961u] = 0xFFu;
-    // level->map[990u] = 0xFFu;
-    // level->map[991u] = 0xFFu;
-    // level->map[992u] = 0xFFu;
-    // level->map[993u] = 0xFFu;
-    // level->map[1022u] = 0xFFu;
-    // level->map[1023u] = 0xFFu;
 
     level->mapPosY = level->mapPosX = 0u;
     level->mapPosYOld = level->mapPosXOld = 255u;
