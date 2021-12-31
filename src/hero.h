@@ -20,6 +20,10 @@ typedef struct Hero
     uint8_t localY;
     uint8_t w;
     uint8_t h;
+    uint8_t halfW;
+    uint8_t halfH;
+    uint8_t localMinX;
+    uint8_t localMinY;
     uint8_t localMaxX;
     uint8_t localMaxY;
     enum Hero_Dir dir;

@@ -10,8 +10,8 @@
 #define levelMapHeight 48u
 #define levelMapSize (levelMapWidth * levelMapHeight)
 
-#define levelCameraMaxX ((levelMapWidth - 20u) * 8u)
-#define levelCameraMaxY ((levelMapHeight - 18u) * 8u)
+#define levelCameraMaxX ((levelMapWidth - 20u) << 3u)
+#define levelCameraMaxY ((levelMapHeight - 18u) << 3u)
 
 #define MIN(A,B) ((A)<(B)?(A):(B))
 

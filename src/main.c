@@ -43,7 +43,7 @@ void Update()
     {
         Hero_SetDir(&hero, Hero_Dir_Up);
 
-        if (hero.localY > (9u << 3u))
+        if (hero.localY > localCenterY)
             Hero_MoveUp(&hero, 1u);
         else if (!Level_MoveCameraUp(&level, 1))
             Hero_MoveUp(&hero, 1);
@@ -52,7 +52,7 @@ void Update()
     {
         Hero_SetDir(&hero, Hero_Dir_Down);
 
-        if (hero.localY < (9u << 3u))
+        if (hero.localY < localCenterY)
             Hero_MoveDown(&hero, 1u);
         else if (!Level_MoveCameraDown(&level, 1u))
             Hero_MoveDown(&hero, 1u);
@@ -62,7 +62,7 @@ void Update()
     {
         Hero_SetDir(&hero, Hero_Dir_Left);
 
-        if (hero.localX > (10u << 3u))
+        if (hero.localX > localCenterX)
             Hero_MoveLeft(&hero, 1u);
         else if (!Level_MoveCameraLeft(&level, 1u))
             Hero_MoveLeft(&hero, 1u);
@@ -71,7 +71,7 @@ void Update()
     {
         Hero_SetDir(&hero, Hero_Dir_Right);
 
-        if (hero.localX < (10u << 3u))
+        if (hero.localX < localCenterX)
             Hero_MoveRight(&hero, 1u);
         else if (!Level_MoveCameraRight(&level, 1u))
             Hero_MoveRight(&hero, 1u);
