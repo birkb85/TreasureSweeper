@@ -43,34 +43,38 @@ void Update()
     {
         Hero_SetDir(&hero, Hero_Dir_Up);
 
-        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
-        if (!Level_MoveCameraUp(&level, 1))
+        if (hero.localY > (9u << 3u))
+            Hero_MoveUp(&hero, 1u);
+        else if (!Level_MoveCameraUp(&level, 1))
             Hero_MoveUp(&hero, 1);
     }
     else if (controls & J_DOWN)
     {
         Hero_SetDir(&hero, Hero_Dir_Down);
 
-        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
-        if (!Level_MoveCameraDown(&level, 1))
-            Hero_MoveDown(&hero, 1);
+        if (hero.localY < (9u << 3u))
+            Hero_MoveDown(&hero, 1u);
+        else if (!Level_MoveCameraDown(&level, 1u))
+            Hero_MoveDown(&hero, 1u);
     }
 
     if (controls & J_LEFT)
     {
         Hero_SetDir(&hero, Hero_Dir_Left);
 
-        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
-        if (!Level_MoveCameraLeft(&level, 1))
-            Hero_MoveLeft(&hero, 1);
+        if (hero.localX > (10u << 3u))
+            Hero_MoveLeft(&hero, 1u);
+        else if (!Level_MoveCameraLeft(&level, 1u))
+            Hero_MoveLeft(&hero, 1u);
     }
     else if (controls & J_RIGHT)
     {
         Hero_SetDir(&hero, Hero_Dir_Right);
 
-        // TODO BB 2021-12-30. Lave movement sådan at han først går ind til midten, og hvis han er på midten så flytter kameraet sig.
-        if (!Level_MoveCameraRight(&level, 1))
-            Hero_MoveRight(&hero, 1);
+        if (hero.localX < (10u << 3u))
+            Hero_MoveRight(&hero, 1u);
+        else if (!Level_MoveCameraRight(&level, 1u))
+            Hero_MoveRight(&hero, 1u);
     }
 }
 
