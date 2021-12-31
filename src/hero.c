@@ -7,17 +7,15 @@ void Hero_Init(struct Hero *hero, uint8_t sprStartIndex)
     {
         set_sprite_tile(sprStartIndex + i, sprStartIndex + i);
         hero->sprIds[i] = sprStartIndex + i;
-    }
-    hero->localX = localCenterX;
-    hero->localY = localCenterY;
+    }    
     hero->w = 16u;
     hero->h = 16u;
-    hero->halfW = hero->w >> 1u;
-    hero->halfH = hero->w >> 1u;
-    hero->localMinX = hero->halfW;
-    hero->localMinY = hero->halfH;
-    hero->localMaxX = (20u << 3u) - hero->halfW;
-    hero->localMaxY = (18u << 3u) - hero->halfH;
+    hero->localMaxX = (20u << 3u) - hero->w;
+    hero->localMaxY = (18u << 3u) - hero->h;
+    hero->localCenterX = hero->localMaxX >> 1u;
+    hero->localCenterY = hero->localMaxY >> 1u;
+    hero->localX = hero->localCenterX;
+    hero->localY = hero->localCenterY;
     hero->dir = Hero_Dir_Down;
     hero->redraw = TRUE;
 }
@@ -30,7 +28,7 @@ void Hero_SetDir(struct Hero *hero, enum Hero_Dir dir)
 
 void Hero_MoveUp(struct Hero *hero, uint8_t amount)
 {
-    if (hero->localY > hero->localMinY)
+    if (hero->localY > 0)
     {
         hero->localY -= amount;
         hero->redraw = TRUE;
@@ -48,7 +46,7 @@ void Hero_MoveDown(struct Hero *hero, uint8_t amount)
 
 void Hero_MoveLeft(struct Hero *hero, uint8_t amount)
 {
-    if (hero->localX > hero->localMinX)
+    if (hero->localX > 0)
     {
         hero->localX -= amount;
         hero->redraw = TRUE;
@@ -116,8 +114,8 @@ void Hero_Draw(struct Hero *hero)
             }
         }
 
-        uint8_t xLeft = localOffsetX + hero->localX - hero->halfW;
-        uint8_t yTop = localOffsetY + hero->localY - hero->halfH - 8u;
+        uint8_t xLeft = localOffsetX + hero->localX;
+        uint8_t yTop = localOffsetY + hero->localY - 8u;
         move_sprite(hero->sprIds[0u], xLeft, yTop);
         move_sprite(hero->sprIds[1u], xLeft + 8u, yTop);
         move_sprite(hero->sprIds[2u], xLeft, yTop + 8u);
