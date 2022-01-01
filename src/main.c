@@ -32,6 +32,7 @@ void Init()
     initrand(DIV_REG);
 
     Level_Init(&level);
+    
     Hero_Init(&hero, 0u);
 }
 

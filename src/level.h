@@ -22,13 +22,13 @@
 enum Level_Tile
 {
     // No collision
-    Level_Tile_None = 0u,
-    Level_Tile_Earth1 = 4u,
-    Level_Tile_Earth2 = 8u,
-    Level_Tile_Earth3 = 12u,
+    Level_Tile_Earth1 = 0u,
+    Level_Tile_Earth2 = 4u,
+    Level_Tile_Earth3 = 8u,
+    Level_Tile_Empty0 = 12u,
 
-    Level_Tile_Enter = 16u,
-    Level_Tile_Free = 20u,
+    Level_Tile_Free = 16u,
+    Level_Tile_Enter = 20u,
     Level_Tile_Exit = 24u,
     Level_Tile_Mine = 28u,
 
@@ -53,6 +53,9 @@ struct Level
 {
     // Generated map
     uint8_t map[levelMapSize];
+
+    uint8_t enterPosX;
+    uint8_t enterPosY;
 
     // Map to draw on screen
     uint8_t mapDraw[levelMapDrawSize];
