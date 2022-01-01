@@ -3,39 +3,228 @@
 void Level_Init(struct Level *level)
 {
     DISPLAY_OFF;
-    set_bkg_data(0u, 48u, levelTiles);
+    set_bkg_data(0u, 80u, levelTiles);
 
-    // TODO BB! 2021-12-31. Test at udfylde "level->map" med tiles, og så generere "level->mapDraw" som bliver vist ud fra det.
-    for (uint8_t x = 0u; x < levelMapWidth; x++)
+    uint8_t xIndex = 0;
+    uint8_t yIndex = 0;
+
+    // Generate ground
+    for (xIndex = 0u; xIndex < levelMapWidth; xIndex++)
     {
-        for (uint8_t y = 0u; y < levelMapHeight; y++)
+        for (yIndex = 0u; yIndex < levelMapHeight; yIndex++)
         {
-            int8_t r = rand();
-            if (r > 100)
-                Level_SetMapTile(level, x, y, Level_Tile_Block);
-            else if (r > 50)
-                Level_SetMapTile(level, x, y, Level_Tile_Earth1);
+            if ((uint8_t)rand() > (100 + 128))
+            {
+                if ((uint8_t)rand() > 128)
+                    Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Earth3);
+                else
+                    Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Earth1);
+            }
             else
-                Level_SetMapTile(level, x, y, Level_Tile_Earth2);
+                Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Earth2);
         }
     }
-    Level_SetMapTile(level, 0u, 0u, Level_Tile_Block1);
-    Level_SetMapTile(level, levelMapWidth - 1u, 0u, Level_Tile_Block2);
-    Level_SetMapTile(level, 0u, levelMapHeight - 1u, Level_Tile_Block3);
-    Level_SetMapTile(level, levelMapWidth - 1u, levelMapHeight - 1u, Level_Tile_Block4);
 
-    for (uint8_t x = 0u; x < levelMapWidth; x++)
+    // Place entrance
+    // TODO BB 2021-01-01. Implement.
+    uint8_t xPos = (uint8_t)rand() >> 4u;
+    uint8_t yPos = (uint8_t)rand() / 11u;
+    Level_SetMapTile(level, xPos, yPos, Level_Tile_Enter);
+    uint8_t xMin = MIN(xPos-2u, MIN(xPos-1u, xPos));
+    uint8_t xMax = MIN(xPos + 2u, levelMapWidth - 1u);
+    uint8_t yMin = MIN(yPos-2u, MIN(yPos-1u, yPos));
+    uint8_t yMax = MIN(yPos + 2u, levelMapHeight - 1u);
+    for (xIndex = xMin; xIndex <= xMax; xIndex++)
     {
-        for (uint8_t y = 0u; y < levelMapHeight; y++)
+        for (yIndex = yMin; yIndex <= yMax; yIndex++)
         {
-            enum Level_Tile tile = Level_GetMapTile(level, x, y);
-            Level_SetMapDrawTile(level, x, y, tile);
+            if (xIndex != xPos || yIndex != yPos)
+            {
+                Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Free);
+            }
+        }
+    }
+
+    // if (xIndex)
+    //     Level_SetMapTile(level, xIndex - 1u, yIndex, Level_Tile_Free);
+    // if (xIndex < levelMapWidth - 1u)
+    //     Level_SetMapTile(level, xIndex + 1u, yIndex, Level_Tile_Free);
+    // if (yIndex)
+    //     Level_SetMapTile(level, xIndex, yIndex - 1u, Level_Tile_Free);
+    // if (yIndex < levelMapHeight - 1u)
+    //     Level_SetMapTile(level, xIndex, yIndex + 1u, Level_Tile_Free);
+
+    // if (xIndex && yIndex)
+    //     Level_SetMapTile(level, xIndex - 1u, yIndex - 1u, Level_Tile_Free);
+    // if (xIndex < levelMapWidth - 1u && yIndex)
+    //     Level_SetMapTile(level, xIndex + 1u, yIndex - 1u, Level_Tile_Free);
+    // if (xIndex && yIndex < levelMapHeight - 1u)
+    //     Level_SetMapTile(level, xIndex - 1u, yIndex + 1u, Level_Tile_Free);
+    // if (xIndex < levelMapWidth - 1u && yIndex < levelMapHeight - 1u)
+    //     Level_SetMapTile(level, xIndex + 1u, yIndex + 1u, Level_Tile_Free);
+
+    // Place exit
+    // TODO BB 2021-01-01. Implement.
+    // enum Level_Tile tile;
+    // uint8_t objToPlace = 1;
+    // while (objToPlace)
+    // {
+    //     xIndex = (uint8_t)rand() >> 4;
+    //     yIndex = (uint8_t)rand() / 11;
+    //     tile = Level_GetMapTile(level, xIndex, yIndex);
+    //     if (tile != Level_Tile_Enter && tile != Level_Tile_Free)
+    //     {
+    //         Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Exit);
+    //         objToPlace--;
+    //     }
+    // }
+
+    // Place mines
+    // TODO BB 2021-01-01. Implement.
+    // objToPlace = 40u;
+    // while (objToPlace)
+    // {
+    //     xIndex = (uint8_t)rand() >> 4u;
+    //     yIndex = (uint8_t)rand() / 11u;
+    //     tile = Level_GetMapTile(level, xIndex, yIndex);
+    //     if (tile != Level_Tile_Enter && tile != Level_Tile_Free && tile != Level_Tile_Exit)
+    //     {
+    //         Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Mine);
+    //         objToPlace--;
+    //     }
+    // }
+
+    // Place numbered blocks
+    // TODO BB 2021-01-01. Implement.
+    // uint8_t numberOfObj = 0;
+    // for (uint8_t xIndex = 0u; xIndex < levelMapWidth; xIndex++)
+    // {
+    //     for (uint8_t yIndex = 0u; yIndex < levelMapHeight; yIndex++)
+    //     {
+    //         tile = Level_GetMapTile(level, xIndex, yIndex);
+    //         if (tile <= Level_Tile_Earth3)
+    //         {
+    //             numberOfObj = 0;
+
+    //             if (xIndex)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex - 1u, yIndex);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+    //             if (xIndex < levelMapWidth - 1u)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex + 1u, yIndex);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+    //             if (yIndex)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex, yIndex - 1u);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+    //             if (yIndex < levelMapHeight - 1u)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex, yIndex + 1u);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+
+    //             if (xIndex && yIndex)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex - 1u, yIndex - 1u);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+    //             if (xIndex < levelMapWidth - 1u && yIndex)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex + 1u, yIndex - 1u);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+    //             if (xIndex && yIndex < levelMapHeight - 1u)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex - 1u, yIndex + 1u);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+    //             if (xIndex < levelMapWidth - 1u && yIndex < levelMapHeight - 1u)
+    //             {
+    //                 tile = Level_GetMapTile(level, xIndex + 1u, yIndex + 1u);
+    //                 if (tile == Level_Tile_Mine)
+    //                 {
+    //                     numberOfObj++;
+    //                 }
+    //             }
+
+    //             switch (numberOfObj)
+    //             {
+    //             case 1:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block1);
+    //                 break;
+
+    //             case 2:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block2);
+    //                 break;
+
+    //             case 3:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block3);
+    //                 break;
+
+    //             case 4:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block4);
+    //                 break;
+
+    //             case 5:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block5);
+    //                 break;
+
+    //             case 6:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block6);
+    //                 break;
+
+    //             case 7:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block7);
+    //                 break;
+
+    //             case 8:
+    //                 Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Block8);
+    //                 break;
+
+    //             default:
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // }
+
+    for (xIndex = 0u; xIndex < levelMapWidth; xIndex++)
+    {
+        for (yIndex = 0u; yIndex < levelMapHeight; yIndex++)
+        {
+            enum Level_Tile tile = Level_GetMapTile(level, xIndex, yIndex);
+            Level_SetMapDrawTile(level, xIndex, yIndex, tile);
         }
     }
 
     level->mapDrawPosY = 0u;
     level->mapDrawPosX = 0u;
-    level->mapDrawPosYOld = 0u;
+    level->mapDrawPosYOld = 255u;
     level->mapDrawPosXOld = 255u;
     set_bkg_submap(level->mapDrawPosX, level->mapDrawPosY, 20u, 18u, level->mapDraw, levelMapDrawWidth);
     DISPLAY_ON;
@@ -63,67 +252,12 @@ void Level_SetMapTile(struct Level *level, uint8_t x, uint8_t y, enum Level_Tile
 
 void Level_SetMapDrawTile(struct Level *level, uint8_t x, uint8_t y, enum Level_Tile tile)
 {
-    uint8_t firstTile = 0u;
-    switch (tile)
-    {
-    case Level_Tile_None:
-        firstTile = 0u;
-        break;
-
-    case Level_Tile_Earth1:
-        firstTile = 4u;
-        break;
-
-    case Level_Tile_Earth2:
-        firstTile = 8u;
-        break;
-
-    case Level_Tile_Block:
-        firstTile = 12u;
-        break;
-
-    case Level_Tile_Block1:
-        firstTile = 16u;
-        break;
-
-    case Level_Tile_Block2:
-        firstTile = 20u;
-        break;
-
-    case Level_Tile_Block3:
-        firstTile = 24u;
-        break;
-
-    case Level_Tile_Block4:
-        firstTile = 28u;
-        break;
-
-    case Level_Tile_Block5:
-        firstTile = 32u;
-        break;
-
-    case Level_Tile_Block6:
-        firstTile = 36u;
-        break;
-
-    case Level_Tile_Block7:
-        firstTile = 40u;
-        break;
-
-    case Level_Tile_Block8:
-        firstTile = 44u;
-        break;
-
-    default:
-        break;
-    }
-
     uint8_t xTemp = x << 1u;
     uint8_t yTemp = y << 1u;
-    level->mapDraw[yTemp * levelMapDrawWidth + xTemp] = firstTile;
-    level->mapDraw[yTemp * levelMapDrawWidth + (xTemp + 1u)] = firstTile + 1u;
-    level->mapDraw[(yTemp + 1u) * levelMapDrawWidth + xTemp] = firstTile + 2u;
-    level->mapDraw[(yTemp + 1u) * levelMapDrawWidth + (xTemp + 1u)] = firstTile + 3u;
+    level->mapDraw[yTemp * levelMapDrawWidth + xTemp] = tile;
+    level->mapDraw[yTemp * levelMapDrawWidth + (xTemp + 1u)] = tile + 1u;
+    level->mapDraw[(yTemp + 1u) * levelMapDrawWidth + xTemp] = tile + 2u;
+    level->mapDraw[(yTemp + 1u) * levelMapDrawWidth + (xTemp + 1u)] = tile + 3u;
 }
 
 uint8_t Level_MoveCameraUp(struct Level *level, uint8_t amount)

@@ -8,34 +8,45 @@
 
 #define levelMapWidth 16u
 #define levelMapHeight 24u
-#define levelMapSize (levelMapWidth * levelMapHeight)
+#define levelMapSize 384u //(levelMapWidth * levelMapHeight)
 
-#define levelMapDrawWidth (levelMapWidth << 1u)
-#define levelMapDrawHeight (levelMapHeight << 1u)
-#define levelMapDrawSize (levelMapDrawWidth * levelMapDrawHeight)
+#define levelMapDrawWidth 32u //(levelMapWidth << 1u)
+#define levelMapDrawHeight 48u //(levelMapHeight << 1u)
+#define levelMapDrawSize 1536u //(levelMapDrawWidth * levelMapDrawHeight)
 
-#define levelCameraMaxX ((levelMapDrawWidth - 20u) << 3u)
-#define levelCameraMaxY ((levelMapDrawHeight - 18u) << 3u)
+#define levelCameraMaxX 96u //((levelMapDrawWidth - 20u) << 3u)
+#define levelCameraMaxY 240u //((levelMapDrawHeight - 18u) << 3u)
 
 #define MIN(A,B) ((A)<(B)?(A):(B))
 
 enum Level_Tile
 {
     // No collision
-    Level_Tile_None,
-    Level_Tile_Earth1,
-    Level_Tile_Earth2,
+    Level_Tile_None = 0u,
+    Level_Tile_Earth1 = 4u,
+    Level_Tile_Earth2 = 8u,
+    Level_Tile_Earth3 = 12u,
+
+    Level_Tile_Enter = 16u,
+    Level_Tile_Free = 20u,
+    Level_Tile_Exit = 24u,
+    Level_Tile_Mine = 28u,
 
     // Collision
-    Level_Tile_Block,
-    Level_Tile_Block1,
-    Level_Tile_Block2,
-    Level_Tile_Block3,
-    Level_Tile_Block4,
-    Level_Tile_Block5,
-    Level_Tile_Block6,
-    Level_Tile_Block7,
-    Level_Tile_Block8
+    Level_Tile_Block = 32u,
+    Level_Tile_Empty1 = 36u,
+    Level_Tile_Empty2 = 40u,
+    Level_Tile_Empty3 = 44u,
+
+    Level_Tile_Block1 = 48u,
+    Level_Tile_Block2 = 52u,
+    Level_Tile_Block3 = 56u,
+    Level_Tile_Block4 = 60u,
+
+    Level_Tile_Block5 = 64u,
+    Level_Tile_Block6 = 68u,
+    Level_Tile_Block7 = 72u,
+    Level_Tile_Block8 = 76u
 };
 
 struct Level
