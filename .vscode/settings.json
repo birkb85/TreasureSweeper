@@ -1,10 +1,14 @@
 {
     "files.associations": {
+        "version.h": "c",
         "string.h": "c",
         "rand.h": "c",
         "gb.h": "c",
         "hero_spr.h": "c",
-        "version.h": "c"
+        "level_tiles.h": "c",
+        "global.h": "c",
+        "hero.h": "c",
+        "level.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

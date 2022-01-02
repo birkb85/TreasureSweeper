@@ -28,8 +28,8 @@ void Level_Init(struct Level *level)
     // Place entrance
     uint8_t xPos = (uint8_t)rand() >> 4u;
     uint8_t yPos = (uint8_t)rand() / 11u;
-    level->enterPosX = xPos;
-    level->enterPosY = yPos;
+    uint8_t enterMapTileX = xPos;
+    uint8_t enterMapTileY = yPos;
     Level_SetMapTile(level, xPos, yPos, Level_Tile_Enter);
     uint8_t xMin = MIN(xPos - 2u, MIN(xPos - 1u, xPos));
     uint8_t xMax = MIN(xPos + 2u, levelMapWidth - 1u);
@@ -161,15 +161,31 @@ void Level_Init(struct Level *level)
         }
     }
 
-    level->mapDrawPosY = 0u;
-    level->mapDrawPosX = 0u;
-    level->mapDrawPosYOld = 255u;
+    uint16_t enterCameraX = (enterMapTileX << 4u) + 8u;
+    if (enterCameraX > 10u << 3u)
+        enterCameraX -= 10u << 3u;
+    else
+        enterCameraX = 0u;
+    if (enterCameraX > levelCameraMaxX)
+        enterCameraX = levelCameraMaxX;
+
+    uint16_t enterCameraY = (enterMapTileY << 4u) + 8u;
+    if (enterCameraY > 9u << 3u)
+        enterCameraY -= 9u << 3u;
+    else
+        enterCameraY = 0u;
+    if (enterCameraY > levelCameraMaxY)
+        enterCameraY = levelCameraMaxY;
+
+    level->mapDrawPosX = enterCameraX >> 3u;
+    level->mapDrawPosY = enterCameraY >> 3u;
     level->mapDrawPosXOld = 255u;
+    level->mapDrawPosYOld = 255u;
     set_bkg_submap(level->mapDrawPosX, level->mapDrawPosY, 20u, 18u, level->mapDraw, levelMapDrawWidth);
     DISPLAY_ON;
 
-    level->cameraX = 0u;
-    level->cameraY = 0u;
+    level->cameraX = enterCameraX;
+    level->cameraY = enterCameraY;
     level->cameraXOld = level->cameraX;
     level->cameraYOld = level->cameraY;
 

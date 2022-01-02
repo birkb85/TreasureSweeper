@@ -54,9 +54,6 @@ struct Level
     // Generated map
     uint8_t map[levelMapSize];
 
-    uint8_t enterPosX;
-    uint8_t enterPosY;
-
     // Map to draw on screen
     uint8_t mapDraw[levelMapDrawSize];
 
