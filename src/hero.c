@@ -1,6 +1,6 @@
 #include "hero.h"
 
-void Hero_Init(struct Hero *hero, uint8_t sprStartIndex)
+void Hero_Init(struct Hero *hero, uint8_t localX, uint8_t localY, uint8_t sprStartIndex)
 {
     set_sprite_data(sprStartIndex, 18u, heroSpr);
     for (uint8_t i = 0; i < sizeof(hero->sprIds); i++)
@@ -14,8 +14,8 @@ void Hero_Init(struct Hero *hero, uint8_t sprStartIndex)
     hero->localMaxY = (18u << 3u) - hero->h;
     hero->localCenterX = hero->localMaxX >> 1u;
     hero->localCenterY = hero->localMaxY >> 1u;
-    hero->localX = hero->localCenterX;
-    hero->localY = hero->localCenterY;
+    hero->localX = localX;
+    hero->localY = localY;
     hero->dir = Hero_Dir_Down;
     hero->redraw = TRUE;
 }

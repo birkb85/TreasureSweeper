@@ -28,7 +28,7 @@ typedef struct Hero
     uint8_t redraw;
 };
 
-extern void Hero_Init(struct Hero *hero, uint8_t sprStartIndex);
+extern void Hero_Init(struct Hero *hero, uint8_t localX, uint8_t localY, uint8_t sprStartIndex);
 extern void Hero_SetDir(struct Hero *hero, enum Hero_Dir dir);
 extern void Hero_MoveUp(struct Hero *hero, uint8_t amount);
 extern void Hero_MoveDown(struct Hero *hero, uint8_t amount);

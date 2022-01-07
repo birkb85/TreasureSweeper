@@ -28,8 +28,8 @@ void Level_Init(struct Level *level)
     // Place entrance
     uint8_t xPos = (uint8_t)rand() >> 4u;
     uint8_t yPos = (uint8_t)rand() / 11u;
-    uint8_t enterMapTileX = xPos;
-    uint8_t enterMapTileY = yPos;
+    level->entranceX = xPos << 4;
+    level->entranceY = yPos << 4;
     Level_SetMapTile(level, xPos, yPos, Level_Tile_Enter);
     uint8_t xMin = MIN(xPos - 2u, MIN(xPos - 1u, xPos));
     uint8_t xMax = MIN(xPos + 2u, levelMapWidth - 1u);
@@ -161,33 +161,30 @@ void Level_Init(struct Level *level)
         }
     }
 
-    uint16_t enterCameraX = (enterMapTileX << 4u) + 8u;
-    if (enterCameraX > 10u << 3u)
-        enterCameraX -= 10u << 3u;
+    level->cameraX = level->entranceX + 8u;
+    if (level->cameraX > 10u << 3u)
+        level->cameraX -= 10u << 3u;
     else
-        enterCameraX = 0u;
-    if (enterCameraX > levelCameraMaxX)
-        enterCameraX = levelCameraMaxX;
+        level->cameraX = 0u;
+    if (level->cameraX > levelCameraMaxX)
+        level->cameraX = levelCameraMaxX;
+    level->cameraXOld = level->cameraX;
 
-    uint16_t enterCameraY = (enterMapTileY << 4u) + 8u;
-    if (enterCameraY > 9u << 3u)
-        enterCameraY -= 9u << 3u;
+    level->cameraY = level->entranceY + 8u;
+    if (level->cameraY > 9u << 3u)
+        level->cameraY -= 9u << 3u;
     else
-        enterCameraY = 0u;
-    if (enterCameraY > levelCameraMaxY)
-        enterCameraY = levelCameraMaxY;
+        level->cameraY = 0u;
+    if (level->cameraY > levelCameraMaxY)
+        level->cameraY = levelCameraMaxY;
+    level->cameraYOld = level->cameraY;
 
-    level->mapDrawPosX = enterCameraX >> 3u;
-    level->mapDrawPosY = enterCameraY >> 3u;
+    level->mapDrawPosX = level->cameraX >> 3u;
+    level->mapDrawPosY = level->cameraY >> 3u;
     level->mapDrawPosXOld = 255u;
     level->mapDrawPosYOld = 255u;
     set_bkg_submap(level->mapDrawPosX, level->mapDrawPosY, 20u, 18u, level->mapDraw, levelMapDrawWidth);
     DISPLAY_ON;
-
-    level->cameraX = enterCameraX;
-    level->cameraY = enterCameraY;
-    level->cameraXOld = level->cameraX;
-    level->cameraYOld = level->cameraY;
 
     level->redraw = FALSE;
 

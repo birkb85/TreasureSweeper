@@ -71,6 +71,9 @@ struct Level
 
     // Redraw flag, indicates that camera position was changed
     uint8_t redraw;
+
+    uint16_t entranceX;
+    uint16_t entranceY;
 };
 
 extern void Level_Init(struct Level *level);

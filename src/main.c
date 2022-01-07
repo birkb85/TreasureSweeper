@@ -33,7 +33,7 @@ void Init()
 
     Level_Init(&level);
     
-    Hero_Init(&hero, 0u);
+    Hero_Init(&hero, level.entranceX - level.cameraX, level.entranceY - level.cameraY, 0u);
 }
 
 void Update()
