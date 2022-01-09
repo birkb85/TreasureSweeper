@@ -20,8 +20,8 @@ void Level_Init(struct Level *level)
     }
 
     // Place entrance
-    uint8_t xPos = (uint8_t)rand() >> 4u;
-    uint8_t yPos = (uint8_t)rand() / 11u;
+    uint8_t xPos = (uint8_t)rand() >> 4u; // OBS! Skal ændres hvis størrelse på kort ændres.
+    uint8_t yPos = (uint8_t)rand() / 11u; // OBS! Skal ændres hvis størrelse på kort ændres.
     level->entranceX = xPos << 4;
     level->entranceY = yPos << 4;
     Level_SetMapTile(level, xPos, yPos, Level_Tile_Enter);
@@ -44,8 +44,8 @@ void Level_Init(struct Level *level)
     uint8_t objToPlace = 1u;
     while (objToPlace)
     {
-        xIndex = (uint8_t)rand() >> 4u;
-        yIndex = (uint8_t)rand() / 11u;
+        xIndex = (uint8_t)rand() >> 4u; // OBS! Skal ændres hvis størrelse på kort ændres.
+        yIndex = (uint8_t)rand() / 11u; // OBS! Skal ændres hvis størrelse på kort ændres.
         tile = Level_GetMapTile(level, xIndex, yIndex);
         if (tile != Level_Tile_Enter &&
             tile != Level_Tile_Free)
@@ -59,8 +59,8 @@ void Level_Init(struct Level *level)
     objToPlace = 40u;
     while (objToPlace)
     {
-        xIndex = (uint8_t)rand() >> 4u;
-        yIndex = (uint8_t)rand() / 11u;
+        xIndex = (uint8_t)rand() >> 4u; // OBS! Skal ændres hvis størrelse på kort ændres.
+        yIndex = (uint8_t)rand() / 11u; // OBS! Skal ændres hvis størrelse på kort ændres.
         tile = Level_GetMapTile(level, xIndex, yIndex);
         if (tile != Level_Tile_Enter &&
             tile != Level_Tile_Free &&
@@ -332,7 +332,7 @@ void Level_DestroyMapTile(struct Level *level, uint8_t tileX, uint8_t tileY)
             tile = Level_GetRandomEarthTile();
             Level_SetMapTile(level, tileX, tileY, tile);
             Level_SetMapDrawTile(level, tileX, tileY, tile);
-            set_bkg_submap(level->mapDrawPosX, level->mapDrawPosY, 20u, 18u, level->mapDraw, levelMapDrawWidth);
+            set_bkg_submap(tileX << 1u, tileY << 1u, 2u, 2u, level->mapDraw, levelMapDrawWidth);
         }
     }
 }
