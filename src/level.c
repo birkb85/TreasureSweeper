@@ -9,19 +9,13 @@ void Level_Init(struct Level *level)
     uint8_t yIndex = 0;
 
     // Generate ground
+    enum Level_Tile tile;
     for (xIndex = 0u; xIndex < levelMapWidth; xIndex++)
     {
         for (yIndex = 0u; yIndex < levelMapHeight; yIndex++)
         {
-            if ((uint8_t)rand() > (228))
-            {
-                if ((uint8_t)rand() > 128)
-                    Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Earth3);
-                else
-                    Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Earth2);
-            }
-            else
-                Level_SetMapTile(level, xIndex, yIndex, Level_Tile_Earth1);
+            tile = Level_GetRandomEarthTile();
+            Level_SetMapTile(level, xIndex, yIndex, tile);
         }
     }
 
@@ -47,7 +41,6 @@ void Level_Init(struct Level *level)
     }
 
     // Place exit
-    enum Level_Tile tile;
     uint8_t objToPlace = 1u;
     while (objToPlace)
     {
@@ -192,6 +185,19 @@ void Level_Init(struct Level *level)
     SCY_REG = level->cameraY;
 }
 
+enum Level_Tile Level_GetRandomEarthTile()
+{
+    if ((uint8_t)rand() > (228))
+    {
+        if ((uint8_t)rand() > 128)
+            return Level_Tile_Earth3;
+        else
+            return Level_Tile_Earth2;
+    }
+    else
+        return Level_Tile_Earth1;
+}
+
 enum Level_Tile Level_GetMapTile(struct Level *level, uint8_t tileX, uint8_t tileY)
 {
     return level->map[tileY * levelMapWidth + tileX];
@@ -314,4 +320,19 @@ uint8_t Level_CheckMapCollision(struct Level *level, uint8_t tileX, uint8_t tile
     }
 
     return TRUE;
+}
+
+void Level_DestroyMapTile(struct Level *level, uint8_t tileX, uint8_t tileY)
+{
+    if (tileX < levelMapWidth && tileY < levelMapHeight)
+    {
+        enum Level_Tile tile = Level_GetMapTile(level, tileX, tileY);
+        if (tile >= Level_Tile_Block)
+        {
+            tile = Level_GetRandomEarthTile();
+            Level_SetMapTile(level, tileX, tileY, tile);
+            Level_SetMapDrawTile(level, tileX, tileY, tile);
+            set_bkg_submap(level->mapDrawPosX, level->mapDrawPosY, 20u, 18u, level->mapDraw, levelMapDrawWidth);
+        }
+    }
 }

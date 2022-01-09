@@ -77,6 +77,7 @@ struct Level
 };
 
 extern void Level_Init(struct Level *level);
+extern enum Level_Tile Level_GetRandomEarthTile();
 extern enum Level_Tile Level_GetMapTile(struct Level *level, uint8_t tileX, uint8_t tileY);
 extern void Level_SetMapTile(struct Level *level, uint8_t tileX, uint8_t tileY, enum Level_Tile tile);
 extern void Level_SetMapDrawTile(struct Level *level, uint8_t tileX, uint8_t tileY, enum Level_Tile tile);
@@ -87,5 +88,6 @@ extern uint8_t Level_MoveCameraRight(struct Level *level, uint8_t amount);
 extern void Level_Draw(struct Level *level);
 
 extern uint8_t Level_CheckMapCollision(struct Level *level, uint8_t tileX, uint8_t tileY);
+extern void Level_DestroyMapTile(struct Level *level, uint8_t tileX, uint8_t tileY);
 
 #endif

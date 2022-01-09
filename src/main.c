@@ -86,7 +86,7 @@ void Update()
                 Hero_MoveDown(&hero, 1u);
         }
     }
-    
+
     if (controls & J_LEFT)
     {
         Hero_SetDir(&hero, Hero_Dir_Left);
@@ -131,6 +131,40 @@ void Update()
                 Hero_MoveRight(&hero, 1u);
             else if (!Level_MoveCameraRight(&level, 1u))
                 Hero_MoveRight(&hero, 1u);
+        }
+    }
+
+    if (controls & J_A)
+    {
+        switch (hero.dir)
+        {
+        case Hero_Dir_Up:
+            Level_DestroyMapTile(
+                &level,
+                (level.cameraX + hero.localX + ((hero.w - 1u) >> 1)) >> 4u,
+                (level.cameraY + hero.localY - 4u) >> 4u);
+            break;
+
+        case Hero_Dir_Down:
+            Level_DestroyMapTile(
+                &level,
+                (level.cameraX + hero.localX + ((hero.w - 1u) >> 1)) >> 4u,
+                (level.cameraY + hero.localY + (hero.h - 1u) + 4u) >> 4u);
+            break;
+
+        case Hero_Dir_Left:
+            Level_DestroyMapTile(
+                &level,
+                (level.cameraX + hero.localX - 4u) >> 4u,
+                (level.cameraY + hero.localY + ((hero.h - 1u) >> 1)) >> 4u);
+            break;
+
+        case Hero_Dir_Right:
+            Level_DestroyMapTile(
+                &level,
+                (level.cameraX + hero.localX + (hero.w - 1u) + 4u) >> 4u,
+                (level.cameraY + hero.localY + ((hero.h - 1u) >> 1)) >> 4u);
+            break;
         }
     }
 }
