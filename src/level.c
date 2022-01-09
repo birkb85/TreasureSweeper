@@ -192,20 +192,20 @@ void Level_Init(struct Level *level)
     SCY_REG = level->cameraY;
 }
 
-enum Level_Tile Level_GetMapTile(struct Level *level, uint8_t x, uint8_t y)
+enum Level_Tile Level_GetMapTile(struct Level *level, uint8_t tileX, uint8_t tileY)
 {
-    return level->map[y * levelMapWidth + x];
+    return level->map[tileY * levelMapWidth + tileX];
 }
 
-void Level_SetMapTile(struct Level *level, uint8_t x, uint8_t y, enum Level_Tile tile)
+void Level_SetMapTile(struct Level *level, uint8_t tileX, uint8_t tileY, enum Level_Tile tile)
 {
-    level->map[y * levelMapWidth + x] = tile;
+    level->map[tileY * levelMapWidth + tileX] = tile;
 }
 
-void Level_SetMapDrawTile(struct Level *level, uint8_t x, uint8_t y, enum Level_Tile tile)
+void Level_SetMapDrawTile(struct Level *level, uint8_t tileX, uint8_t tileY, enum Level_Tile tile)
 {
-    uint8_t xTemp = x << 1u;
-    uint8_t yTemp = y << 1u;
+    uint8_t xTemp = tileX << 1u;
+    uint8_t yTemp = tileY << 1u;
     level->mapDraw[yTemp * levelMapDrawWidth + xTemp] = tile;
     level->mapDraw[yTemp * levelMapDrawWidth + (xTemp + 1u)] = tile + 1u;
     level->mapDraw[(yTemp + 1u) * levelMapDrawWidth + xTemp] = tile + 2u;
@@ -302,4 +302,16 @@ void Level_Draw(struct Level *level)
 
         level->redraw = FALSE;
     }
+}
+
+uint8_t Level_CheckMapCollision(struct Level *level, uint8_t tileX, uint8_t tileY)
+{
+    if (tileX < levelMapWidth && tileY < levelMapHeight)
+    {
+        enum Level_Tile tile = Level_GetMapTile(level, tileX, tileY);
+        if (tile < Level_Tile_Block)
+            return FALSE;
+    }
+
+    return TRUE;
 }
